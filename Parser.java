@@ -58,18 +58,19 @@ class Parser{
 
 	Operador Op () throws Exception
 		{
-		
 		Token tokenCorrente = scanner.getNextToken();
 		switch(tokenCorrente.token){
 			case SOMA:
 				return new Soma(null,null);
 			case MULT:
 				return new Mult(null,null);
+			case DIV:
+				return new Div(null, null);
+			case SUB:
+				return new Sub(null, null);
 			default: 
 		}
-		return null;
-			
-
+		return null;			
 		}
 
 }
