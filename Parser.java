@@ -23,10 +23,9 @@ class Parser{
 	Exp Exp() throws Exception
 	{       Exp exp1, exp2;
 		Token tokenCorrente =  scanner.getNextToken();
-
-		if(tokenCorrente.token == TokenType.NUM)
+		if(tokenCorrente.token == TokenType.NUM){
 			return new Num(Integer.parseInt(tokenCorrente.lexema+""));
-		
+		}
 		
 		if(tokenCorrente.token == TokenType.APar)
 			{
