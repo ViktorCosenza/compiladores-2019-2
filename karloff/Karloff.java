@@ -14,10 +14,209 @@ public class Karloff implements KarloffConstants {
 }
 
   static final public void VarDecl() throws ParseException {
-    jj_consume_token(NEWVAR);
-    jj_consume_token(TIPO);
+    label_1:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case NEWVAR:{
+        ;
+        break;
+        }
+      default:
+        jj_la1[0] = jj_gen;
+        break label_1;
+      }
+      jj_consume_token(NEWVAR);
+      jj_consume_token(TIPO);
+      jj_consume_token(ID);
+      jj_consume_token(PV);
+    }
+}
+
+  static final public void Fator() throws ParseException {
+    if (jj_2_1(2)) {
+      jj_consume_token(ID);
+      jj_consume_token(OPENPAR);
+      ListaExp();
+      jj_consume_token(CLOSEPAR);
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case ID:{
+        jj_consume_token(ID);
+        break;
+        }
+      case NUM:{
+        jj_consume_token(NUM);
+        break;
+        }
+      case TRUE:{
+        jj_consume_token(TRUE);
+        break;
+        }
+      case FALSE:{
+        jj_consume_token(FALSE);
+        break;
+        }
+      default:
+        jj_la1[1] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
+}
+
+  static final public void ChamadaFunc() throws ParseException {
     jj_consume_token(ID);
+    jj_consume_token(OPENPAR);
+    ListaExp();
+    jj_consume_token(CLOSEPAR);
     jj_consume_token(PV);
+}
+
+  static final public void IfThen() throws ParseException {
+    jj_consume_token(IF);
+    jj_consume_token(OPENPAR);
+    Exp();
+    jj_consume_token(CLOSEPAR);
+    jj_consume_token(THEN);
+    jj_consume_token(ACHAVES);
+    SeqCommands();
+    jj_consume_token(FCHAVES);
+    jj_consume_token(PV);
+}
+
+  static final public void While() throws ParseException {
+    jj_consume_token(WHILE);
+    jj_consume_token(OPENPAR);
+    Exp();
+    jj_consume_token(CLOSEPAR);
+    jj_consume_token(ACHAVES);
+    SeqCommands();
+    jj_consume_token(FCHAVES);
+    jj_consume_token(PV);
+}
+
+  static final public void Repeat() throws ParseException {
+    jj_consume_token(REPEAT);
+    jj_consume_token(ACHAVES);
+    SeqCommands();
+    jj_consume_token(FCHAVES);
+    jj_consume_token(UNTIL);
+    jj_consume_token(OPENPAR);
+    Exp();
+    jj_consume_token(CLOSEPAR);
+    jj_consume_token(PV);
+}
+
+  static final public void Output() throws ParseException {
+    jj_consume_token(SYSTEMOUTPUT);
+    jj_consume_token(OPENPAR);
+    Exp();
+    jj_consume_token(CLOSEPAR);
+    jj_consume_token(PV);
+}
+
+  static final public void ListaExp() throws ParseException {
+    Exp();
+    ListaExp1();
+}
+
+  static final public void ListaExp1() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case 30:{
+      jj_consume_token(30);
+      ListaExp();
+      break;
+      }
+    default:
+      jj_la1[2] = jj_gen;
+      ;
+    }
+}
+
+  static final public void Exp() throws ParseException {
+    Fator();
+    Exp1();
+}
+
+  static final public void Exp1() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case OP:{
+      jj_consume_token(OP);
+      Exp();
+      break;
+      }
+    default:
+      jj_la1[3] = jj_gen;
+      ;
+    }
+}
+
+  static final public void Atrib() throws ParseException {
+    jj_consume_token(ID);
+    jj_consume_token(31);
+    Exp();
+    jj_consume_token(PV);
+}
+
+  static final public void Return() throws ParseException {
+    jj_consume_token(RETURN);
+    Exp();
+    jj_consume_token(PV);
+}
+
+  static final public void Command() throws ParseException {
+    if (jj_2_2(2)) {
+      Atrib();
+    } else {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case RETURN:{
+        Return();
+        break;
+        }
+      case ID:{
+        ChamadaFunc();
+        break;
+        }
+      case IF:{
+        IfThen();
+        break;
+        }
+      case WHILE:{
+        While();
+        break;
+        }
+      case REPEAT:{
+        Repeat();
+        break;
+        }
+      case SYSTEMOUTPUT:{
+        Output();
+        break;
+        }
+      default:
+        jj_la1[4] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+    }
+}
+
+  static final public void SeqCommands() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case SYSTEMOUTPUT:
+    case RETURN:
+    case REPEAT:
+    case WHILE:
+    case IF:
+    case ID:{
+      Command();
+      SeqCommands();
+      break;
+      }
+    default:
+      jj_la1[5] = jj_gen;
+      ;
+    }
 }
 
   static final public void Main() throws ParseException {
@@ -25,8 +224,45 @@ public class Karloff implements KarloffConstants {
     jj_consume_token(MAIN);
     jj_consume_token(ACHAVES);
     VarDecl();
+    SeqCommands();
     jj_consume_token(FCHAVES);
 }
+
+  static private boolean jj_2_1(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return (!jj_3_1()); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(0, xla); }
+  }
+
+  static private boolean jj_2_2(int xla)
+ {
+    jj_la = xla; jj_lastpos = jj_scanpos = token;
+    try { return (!jj_3_2()); }
+    catch(LookaheadSuccess ls) { return true; }
+    finally { jj_save(1, xla); }
+  }
+
+  static private boolean jj_3R_2()
+ {
+    if (jj_scan_token(ID)) return true;
+    if (jj_scan_token(31)) return true;
+    return false;
+  }
+
+  static private boolean jj_3_2()
+ {
+    if (jj_3R_2()) return true;
+    return false;
+  }
+
+  static private boolean jj_3_1()
+ {
+    if (jj_scan_token(ID)) return true;
+    if (jj_scan_token(OPENPAR)) return true;
+    return false;
+  }
 
   static private boolean jj_initialized_once = false;
   /** Generated Token Manager. */
@@ -37,15 +273,20 @@ public class Karloff implements KarloffConstants {
   /** Next token. */
   static public Token jj_nt;
   static private int jj_ntk;
+  static private Token jj_scanpos, jj_lastpos;
+  static private int jj_la;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[0];
+  static final private int[] jj_la1 = new int[6];
   static private int[] jj_la1_0;
   static {
 	   jj_la1_init_0();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {};
+	   jj_la1_0 = new int[] {0x400,0x30600000,0x40000000,0x8000000,0x100d9000,0x100d9000,};
 	}
+  static final private JJCalls[] jj_2_rtns = new JJCalls[2];
+  static private boolean jj_rescan = false;
+  static private int jj_gc = 0;
 
   /** Constructor with InputStream. */
   public Karloff(java.io.InputStream stream) {
@@ -65,6 +306,8 @@ public class Karloff implements KarloffConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
+	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   /** Reinitialise. */
@@ -78,7 +321,8 @@ public class Karloff implements KarloffConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 0; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   /** Constructor. */
@@ -95,6 +339,8 @@ public class Karloff implements KarloffConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
+	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   /** Reinitialise. */
@@ -112,6 +358,8 @@ public class Karloff implements KarloffConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
+	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   /** Constructor with generated Token Manager. */
@@ -127,6 +375,8 @@ public class Karloff implements KarloffConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
+	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   /** Reinitialise. */
@@ -135,6 +385,8 @@ public class Karloff implements KarloffConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
+	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
   static private Token jj_consume_token(int kind) throws ParseException {
@@ -144,11 +396,45 @@ public class Karloff implements KarloffConstants {
 	 jj_ntk = -1;
 	 if (token.kind == kind) {
 	   jj_gen++;
+	   if (++jj_gc > 100) {
+		 jj_gc = 0;
+		 for (int i = 0; i < jj_2_rtns.length; i++) {
+		   JJCalls c = jj_2_rtns[i];
+		   while (c != null) {
+			 if (c.gen < jj_gen) c.first = null;
+			 c = c.next;
+		   }
+		 }
+	   }
 	   return token;
 	 }
 	 token = oldToken;
 	 jj_kind = kind;
 	 throw generateParseException();
+  }
+
+  @SuppressWarnings("serial")
+  static private final class LookaheadSuccess extends java.lang.Error { }
+  static final private LookaheadSuccess jj_ls = new LookaheadSuccess();
+  static private boolean jj_scan_token(int kind) {
+	 if (jj_scanpos == jj_lastpos) {
+	   jj_la--;
+	   if (jj_scanpos.next == null) {
+		 jj_lastpos = jj_scanpos = jj_scanpos.next = token_source.getNextToken();
+	   } else {
+		 jj_lastpos = jj_scanpos = jj_scanpos.next;
+	   }
+	 } else {
+	   jj_scanpos = jj_scanpos.next;
+	 }
+	 if (jj_rescan) {
+	   int i = 0; Token tok = token;
+	   while (tok != null && tok != jj_scanpos) { i++; tok = tok.next; }
+	   if (tok != null) jj_add_error_token(kind, i);
+	 }
+	 if (jj_scanpos.kind != kind) return true;
+	 if (jj_la == 0 && jj_scanpos == jj_lastpos) throw jj_ls;
+	 return false;
   }
 
 
@@ -181,16 +467,56 @@ public class Karloff implements KarloffConstants {
   static private java.util.List<int[]> jj_expentries = new java.util.ArrayList<int[]>();
   static private int[] jj_expentry;
   static private int jj_kind = -1;
+  static private int[] jj_lasttokens = new int[100];
+  static private int jj_endpos;
+
+  static private void jj_add_error_token(int kind, int pos) {
+	 if (pos >= 100) {
+		return;
+	 }
+
+	 if (pos == jj_endpos + 1) {
+	   jj_lasttokens[jj_endpos++] = kind;
+	 } else if (jj_endpos != 0) {
+	   jj_expentry = new int[jj_endpos];
+
+	   for (int i = 0; i < jj_endpos; i++) {
+		 jj_expentry[i] = jj_lasttokens[i];
+	   }
+
+	   for (int[] oldentry : jj_expentries) {
+		 if (oldentry.length == jj_expentry.length) {
+		   boolean isMatched = true;
+
+		   for (int i = 0; i < jj_expentry.length; i++) {
+			 if (oldentry[i] != jj_expentry[i]) {
+			   isMatched = false;
+			   break;
+			 }
+
+		   }
+		   if (isMatched) {
+			 jj_expentries.add(jj_expentry);
+			 break;
+		   }
+		 }
+	   }
+
+	   if (pos != 0) {
+		 jj_lasttokens[(jj_endpos = pos) - 1] = kind;
+	   }
+	 }
+  }
 
   /** Generate ParseException. */
   static public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[19];
+	 boolean[] la1tokens = new boolean[32];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
 	 }
-	 for (int i = 0; i < 0; i++) {
+	 for (int i = 0; i < 6; i++) {
 	   if (jj_la1[i] == jj_gen) {
 		 for (int j = 0; j < 32; j++) {
 		   if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -199,13 +525,16 @@ public class Karloff implements KarloffConstants {
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 19; i++) {
+	 for (int i = 0; i < 32; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;
 		 jj_expentries.add(jj_expentry);
 	   }
 	 }
+	 jj_endpos = 0;
+	 jj_rescan_token();
+	 jj_add_error_token(0, 0);
 	 int[][] exptokseq = new int[jj_expentries.size()][];
 	 for (int i = 0; i < jj_expentries.size(); i++) {
 	   exptokseq[i] = jj_expentries.get(i);
@@ -227,6 +556,47 @@ public class Karloff implements KarloffConstants {
 
   /** Disable tracing. */
   static final public void disable_tracing() {
+  }
+
+  static private void jj_rescan_token() {
+	 jj_rescan = true;
+	 for (int i = 0; i < 2; i++) {
+	   try {
+		 JJCalls p = jj_2_rtns[i];
+
+		 do {
+		   if (p.gen > jj_gen) {
+			 jj_la = p.arg; jj_lastpos = jj_scanpos = p.first;
+			 switch (i) {
+			   case 0: jj_3_1(); break;
+			   case 1: jj_3_2(); break;
+			 }
+		   }
+		   p = p.next;
+		 } while (p != null);
+
+		 } catch(LookaheadSuccess ls) { }
+	 }
+	 jj_rescan = false;
+  }
+
+  static private void jj_save(int index, int xla) {
+	 JJCalls p = jj_2_rtns[index];
+	 while (p.gen > jj_gen) {
+	   if (p.next == null) { p = p.next = new JJCalls(); break; }
+	   p = p.next;
+	 }
+
+	 p.gen = jj_gen + xla - jj_la; 
+	 p.first = token;
+	 p.arg = xla;
+  }
+
+  static final class JJCalls {
+	 int gen;
+	 Token first;
+	 int arg;
+	 JJCalls next;
   }
 
 }

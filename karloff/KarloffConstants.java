@@ -23,19 +23,41 @@ public interface KarloffConstants {
   /** RegularExpression Id. */
   int PV = 11;
   /** RegularExpression Id. */
-  int FACAO_OPCIONAL = 12;
+  int SYSTEMOUTPUT = 12;
   /** RegularExpression Id. */
-  int EXP_OPCIONAL = 13;
+  int OPENPAR = 13;
   /** RegularExpression Id. */
-  int CHAR = 14;
+  int CLOSEPAR = 14;
   /** RegularExpression Id. */
-  int DIGIT = 15;
+  int RETURN = 15;
   /** RegularExpression Id. */
-  int ID = 16;
+  int REPEAT = 16;
   /** RegularExpression Id. */
-  int NUM = 17;
+  int UNTIL = 17;
   /** RegularExpression Id. */
-  int VARDECL = 18;
+  int WHILE = 18;
+  /** RegularExpression Id. */
+  int IF = 19;
+  /** RegularExpression Id. */
+  int THEN = 20;
+  /** RegularExpression Id. */
+  int TRUE = 21;
+  /** RegularExpression Id. */
+  int FALSE = 22;
+  /** RegularExpression Id. */
+  int FACAO_OPCIONAL = 23;
+  /** RegularExpression Id. */
+  int EXP_OPCIONAL = 24;
+  /** RegularExpression Id. */
+  int CHAR = 25;
+  /** RegularExpression Id. */
+  int DIGIT = 26;
+  /** RegularExpression Id. */
+  int OP = 27;
+  /** RegularExpression Id. */
+  int ID = 28;
+  /** RegularExpression Id. */
+  int NUM = 29;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -54,13 +76,26 @@ public interface KarloffConstants {
     "<TIPO>",
     "\"newVar\"",
     "\";\"",
+    "\"System.output\"",
+    "\"(\"",
+    "\")\"",
+    "\"return\"",
+    "\"repeat\"",
+    "\"until\"",
+    "\"while\"",
+    "\"if\"",
+    "\"then\"",
+    "\"true\"",
+    "\"false\"",
     "<FACAO_OPCIONAL>",
     "<EXP_OPCIONAL>",
     "<CHAR>",
     "<DIGIT>",
+    "<OP>",
     "<ID>",
     "<NUM>",
-    "<VARDECL>",
+    "\",\"",
+    "\"=\"",
   };
 
 }

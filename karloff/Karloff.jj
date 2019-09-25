@@ -27,6 +27,18 @@ TOKEN :
 | <TIPO: "int"|"bool">
 | <NEWVAR: "newVar">
 | <PV: ";">
+| <SYSTEMOUTPUT: "System.output">
+| <OPENPAR: "(">
+| <CLOSEPAR: ")">
+| <RETURN: "return">
+| <REPEAT: "repeat">
+| <UNTIL: "until">
+| <WHILE: "while">
+| <IF: "if">
+| <THEN: "then">
+| <TRUE: "true">
+| <FALSE: "false">
+
 }
 
 TOKEN :
@@ -35,17 +47,10 @@ TOKEN :
 |<#EXP_OPCIONAL: ("E"("+"|"-")? (<DIGIT>)*)?>
 |<#CHAR: ["a"-"z", "A"-"Z"]>
 |<#DIGIT: ["0"-"9"]>
-|<#OP: "+"|"-"|"*"|"/"|"&"|"|"|"<"|">"|"==">
-
+|<OP: "+"|"-"|"*"|"/"|"&"|"|"|"<"|">"|"==">
 |<ID: <CHAR>(<CHAR>|<DIGIT>|"_")*>
 |<NUM: ((["1"-"9"](<DIGIT>)*) | "0")(<FACAO_OPCIONAL>)*<EXP_OPCIONAL>>
-|<VARDECL: (<NEWVAR> <TIPO> <ID> <PV>)*> 
 
-|<#FATOR: <ID>>
-|<#EXP: >
-|<#ATRIB: <ID>"="<EXP><PV>>
-|<COMMAND: ()>
-|<SEQCOMMANDS: COMMAND*>
 }
 
 
@@ -61,22 +66,102 @@ void Karloff () :
 
 void VarDecl():{}
 {
-  <NEWVAR> <TIPO> <ID> <PV>
+  (<NEWVAR> <TIPO> <ID> <PV>)*
+}
+
+void Fator():{}
+{
+  LOOKAHEAD(2)
+  <ID> <OPENPAR> ListaExp() <CLOSEPAR>
+  | <ID>
+  | <NUM>
+  | <TRUE>
+  | <FALSE>
+}
+
+void ChamadaFunc():{}
+{
+  <ID><OPENPAR>ListaExp()<CLOSEPAR> <PV>
+}
+
+void IfThen():{}
+{
+  <IF><OPENPAR>Exp()<CLOSEPAR>
+    <THEN> <ACHAVES>SeqCommands()<FCHAVES><PV>
+}
+
+void While():{}
+{
+  <WHILE><OPENPAR>Exp()<CLOSEPAR>
+    <ACHAVES>SeqCommands()<FCHAVES><PV>
+}
+
+void Repeat():{}
+{
+  <REPEAT> <ACHAVES>
+    SeqCommands()
+  <FCHAVES> <UNTIL> <OPENPAR>Exp()<CLOSEPAR> <PV>
+}
+
+void Output():{}
+{
+  <SYSTEMOUTPUT> <OPENPAR> Exp() <CLOSEPAR> <PV>
+}
+
+void ListaExp():{}
+{
+  Exp()ListaExp1()
+}
+
+void ListaExp1():{}
+{
+  (","ListaExp())?
+}
+
+void Exp ():{}
+{
+  Fator()Exp1()
+}
+
+void Exp1():{}
+{
+  (<OP>Exp())?
+}
+
+void Atrib():{}
+{
+  <ID> "=" Exp() <PV>
+}
+
+void Return():{}
+{
+  <RETURN> Exp() <PV>
+}
+
+void Command():{}
+{
+  LOOKAHEAD(2)
+  Atrib() 
+  | Return()
+  | ChamadaFunc()
+  | IfThen()
+  | While()
+  | Repeat()
+  | Output()
 }
 
 void SeqCommands():{}
 {
-
+  (Command()SeqCommands())?
 }
+
 
 void Main ():
 {}
 {
  <VOID><MAIN> <ACHAVES> 
- 
  VarDecl()
- // SeqComandos()
-
+ SeqCommands()
  <FCHAVES>
 
 }
