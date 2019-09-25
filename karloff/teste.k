@@ -9,3 +9,5 @@ void main {
     } until (true);
   };
 }
+
+func int pipi (int a, int b) { return a+b;}

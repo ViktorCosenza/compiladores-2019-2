@@ -45,19 +45,21 @@ public interface KarloffConstants {
   /** RegularExpression Id. */
   int FALSE = 22;
   /** RegularExpression Id. */
-  int FACAO_OPCIONAL = 23;
+  int FUNC = 23;
   /** RegularExpression Id. */
-  int EXP_OPCIONAL = 24;
+  int FACAO_OPCIONAL = 24;
   /** RegularExpression Id. */
-  int CHAR = 25;
+  int EXP_OPCIONAL = 25;
   /** RegularExpression Id. */
-  int DIGIT = 26;
+  int CHAR = 26;
   /** RegularExpression Id. */
-  int OP = 27;
+  int DIGIT = 27;
   /** RegularExpression Id. */
-  int ID = 28;
+  int OP = 28;
   /** RegularExpression Id. */
-  int NUM = 29;
+  int ID = 29;
+  /** RegularExpression Id. */
+  int NUM = 30;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -87,6 +89,7 @@ public interface KarloffConstants {
     "\"then\"",
     "\"true\"",
     "\"false\"",
+    "\"func\"",
     "<FACAO_OPCIONAL>",
     "<EXP_OPCIONAL>",
     "<CHAR>",

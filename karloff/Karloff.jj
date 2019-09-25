@@ -38,7 +38,7 @@ TOKEN :
 | <THEN: "then">
 | <TRUE: "true">
 | <FALSE: "false">
-
+| <FUNC: "func">
 }
 
 TOKEN :
@@ -60,7 +60,7 @@ void Karloff () :
 { 
 
   Main() 
-  //Func()
+  SeqFunc()
   <EOF> 
 }
 
@@ -155,6 +155,33 @@ void SeqCommands():{}
   (Command()SeqCommands())?
 }
 
+void Arg():{}
+{
+  <TIPO><ID>
+}
+
+void ListaArgs():{}
+{
+   (Arg()ListaArgs1())?
+}
+
+void ListaArgs1():{}
+{
+  (","ListaArgs())?
+}
+
+void Func():{}
+{
+  <FUNC> <TIPO> <ID> <OPENPAR>ListaArgs()<CLOSEPAR> <ACHAVES>
+    VarDecl()
+    SeqCommands()
+  <FCHAVES>
+}
+
+void SeqFunc():{}
+{
+  (Func()SeqFunc())? 
+}
 
 void Main ():
 {}
@@ -163,7 +190,6 @@ void Main ():
  VarDecl()
  SeqCommands()
  <FCHAVES>
-
 }
 
 

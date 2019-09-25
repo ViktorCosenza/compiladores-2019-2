@@ -10,6 +10,7 @@ public class Karloff implements KarloffConstants {
 
   static final public void Karloff() throws ParseException {
     Main();
+    SeqFunc();
     jj_consume_token(0);
 }
 
@@ -122,8 +123,8 @@ public class Karloff implements KarloffConstants {
 
   static final public void ListaExp1() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-    case 30:{
-      jj_consume_token(30);
+    case 31:{
+      jj_consume_token(31);
       ListaExp();
       break;
       }
@@ -153,7 +154,7 @@ public class Karloff implements KarloffConstants {
 
   static final public void Atrib() throws ParseException {
     jj_consume_token(ID);
-    jj_consume_token(31);
+    jj_consume_token(32);
     Exp();
     jj_consume_token(PV);
 }
@@ -219,6 +220,63 @@ public class Karloff implements KarloffConstants {
     }
 }
 
+  static final public void Arg() throws ParseException {
+    jj_consume_token(TIPO);
+    jj_consume_token(ID);
+}
+
+  static final public void ListaArgs() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case TIPO:{
+      Arg();
+      ListaArgs1();
+      break;
+      }
+    default:
+      jj_la1[6] = jj_gen;
+      ;
+    }
+}
+
+  static final public void ListaArgs1() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case 31:{
+      jj_consume_token(31);
+      ListaArgs();
+      break;
+      }
+    default:
+      jj_la1[7] = jj_gen;
+      ;
+    }
+}
+
+  static final public void Func() throws ParseException {
+    jj_consume_token(FUNC);
+    jj_consume_token(TIPO);
+    jj_consume_token(ID);
+    jj_consume_token(OPENPAR);
+    ListaArgs();
+    jj_consume_token(CLOSEPAR);
+    jj_consume_token(ACHAVES);
+    VarDecl();
+    SeqCommands();
+    jj_consume_token(FCHAVES);
+}
+
+  static final public void SeqFunc() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case FUNC:{
+      Func();
+      SeqFunc();
+      break;
+      }
+    default:
+      jj_la1[8] = jj_gen;
+      ;
+    }
+}
+
   static final public void Main() throws ParseException {
     jj_consume_token(VOID);
     jj_consume_token(MAIN);
@@ -247,7 +305,7 @@ public class Karloff implements KarloffConstants {
   static private boolean jj_3R_2()
  {
     if (jj_scan_token(ID)) return true;
-    if (jj_scan_token(31)) return true;
+    if (jj_scan_token(32)) return true;
     return false;
   }
 
@@ -276,13 +334,18 @@ public class Karloff implements KarloffConstants {
   static private Token jj_scanpos, jj_lastpos;
   static private int jj_la;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[6];
+  static final private int[] jj_la1 = new int[9];
   static private int[] jj_la1_0;
+  static private int[] jj_la1_1;
   static {
 	   jj_la1_init_0();
+	   jj_la1_init_1();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x400,0x30600000,0x40000000,0x8000000,0x100d9000,0x100d9000,};
+	   jj_la1_0 = new int[] {0x400,0x60600000,0x80000000,0x10000000,0x200d9000,0x200d9000,0x200,0x80000000,0x800000,};
+	}
+	private static void jj_la1_init_1() {
+	   jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,};
 	}
   static final private JJCalls[] jj_2_rtns = new JJCalls[2];
   static private boolean jj_rescan = false;
@@ -306,7 +369,7 @@ public class Karloff implements KarloffConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 9; i++) jj_la1[i] = -1;
 	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -321,7 +384,7 @@ public class Karloff implements KarloffConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 9; i++) jj_la1[i] = -1;
 	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -339,7 +402,7 @@ public class Karloff implements KarloffConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 9; i++) jj_la1[i] = -1;
 	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -358,7 +421,7 @@ public class Karloff implements KarloffConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 9; i++) jj_la1[i] = -1;
 	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -375,7 +438,7 @@ public class Karloff implements KarloffConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 9; i++) jj_la1[i] = -1;
 	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -385,7 +448,7 @@ public class Karloff implements KarloffConstants {
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 9; i++) jj_la1[i] = -1;
 	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -511,21 +574,24 @@ public class Karloff implements KarloffConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[32];
+	 boolean[] la1tokens = new boolean[33];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
 	 }
-	 for (int i = 0; i < 6; i++) {
+	 for (int i = 0; i < 9; i++) {
 	   if (jj_la1[i] == jj_gen) {
 		 for (int j = 0; j < 32; j++) {
 		   if ((jj_la1_0[i] & (1<<j)) != 0) {
 			 la1tokens[j] = true;
 		   }
+		   if ((jj_la1_1[i] & (1<<j)) != 0) {
+			 la1tokens[32+j] = true;
+		   }
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 32; i++) {
+	 for (int i = 0; i < 33; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;
