@@ -1,5 +1,6 @@
 void main {
   newVar int b;
+  newVar bool c;
   while (a + b) {
     print(c);
     if (c) then {print(a); return a + c;};

@@ -1,5 +1,5 @@
 all: Karloff.jj
-	javacc Karloff.jj && javac *.java && java Karloff teste.k
+	javacc Karloff.jj && javac *.java
 
 
 test: 
