@@ -1,6 +1,7 @@
 import Control.Monad
 import Data.List.Split
 import System.IO
+import System.Environment
 
 data Stack = Stack [Integer] deriving (Show)
 
@@ -71,7 +72,8 @@ stackHead :: Stack -> Integer
 stackHead (Stack s) = head s
 
 main = do
-  fileContent <- readFile "teste.out"
+  filePath <- getArgs
+  fileContent <- readFile $ head filePath
   let lexemas = splitWords fileContent
   let tokens = map lexemaToToken lexemas
   let result = run tokens (Stack [])
