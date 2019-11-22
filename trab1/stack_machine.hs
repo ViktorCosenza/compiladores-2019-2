@@ -57,8 +57,8 @@ lexemaToToken ["PUSH", value] = Push (read value :: Integer)
 step :: Instruction -> Stack -> Stack
 step (Push value) stack           = push value stack  
 step (BinaryOp instruction) stack = push (binaryOp instruction num1 num2) stack'' 
-  where (stack', num1)            = pop (stack)
-        (stack'', num2)           = pop (stack')
+  where (stack', num2)            = pop (stack)
+        (stack'', num1)           = pop (stack')
 step _ (Stack s) = Stack s 
 
 
