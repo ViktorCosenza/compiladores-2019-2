@@ -106,7 +106,8 @@ SKIP :
 
 TOKEN :
 {
-  < NUM: ["0"-"9"](["0"-"9"])* >
+   <#LETRA: (["a"-"z"]|["A"-"Z"])>
+  | < NUM: ["0"-"9"](["0"-"9"])* >
   | < ENDLINE: ";">
   | < DOUBLE_COLUMN: ":">
   | < VAR: "var">
@@ -117,7 +118,7 @@ TOKEN :
   | < MAIN: "main">
   | < PRINT: "print">
   | < TIPO: "int">
-  | < ID: ["a"-"z"](["a"-"z"])*>
+  | < ID: <LETRA>(<LETRA> | ["0"-"9"])*>
   | < BIN_OP: "+"|"-"|"/"|"*">
   | < ATRIB: ":=">
 }
